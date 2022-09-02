@@ -16,7 +16,7 @@ public class Maze {
         for (int j = 0; j < b; j++) {
             newRow(a, j, sets);
             setRightWalls(a, j, sets);
-            setBottomWalls(a, j, sets);
+            setBottomWalls(a, b, j, sets);
         }
         endMaze(a, b, sets);
     }
@@ -30,8 +30,8 @@ public class Maze {
         }
     }
 
-    private void setBottomWalls(int a, int j, ArrayList<ArrayList<Integer>> sets) {
-        if (j == a - 1) {
+    private void setBottomWalls(int a, int b, int j, ArrayList<ArrayList<Integer>> sets) {
+        if (j == b - 1) {
             bottomWall.add(j, new ArrayList<>(Collections.nCopies(a, true)));
             return;
         }
@@ -104,9 +104,9 @@ public class Maze {
     public String toString() {
         StringBuilder str = new StringBuilder("");
         for (int i = 0; i <= rightWall.size(); i++) {
-            for (int j = 0; j <= bottomWall.size(); j++) {
+            for (int j = 0; j <= rightWall.get(0).size(); j++) {
                 if (i == 0) {
-                    if(j < bottomWall.size())
+                    if(j < rightWall.get(0).size())
                         str.append(" __");
                 } else {
                     if (j == 0)
