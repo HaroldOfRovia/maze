@@ -4,6 +4,7 @@ import java.util.Collections;
 public class Maze {
     private ArrayList<ArrayList<Boolean>> rightWall;
     private ArrayList<ArrayList<Boolean>> bottomWall;
+    private ArrayList<ArrayList<Integer>> sets;
 
     /**
      * @param a - column
@@ -19,6 +20,7 @@ public class Maze {
             setBottomWalls(a, b, j, sets);
         }
         endMaze(a, b, sets);
+        this.sets = sets;
     }
 
     private void endMaze(int a, int b, ArrayList<ArrayList<Integer>> sets) {
@@ -36,11 +38,10 @@ public class Maze {
             return;
         }
         bottomWall.add(new ArrayList<>(Collections.nCopies(a, false)));
-        int countWalls = 0, currNum = sets.get(j).get(0);
-        int finalCurrNum = currNum;
-        int lengthNum = (int) sets.get(j).stream().filter((num) -> num == finalCurrNum).count();
+        int countWalls = 0, currNum = 0, lengthNum = 0;
         for (int i = 0; i < a; i++) {
             if (currNum != sets.get(j).get(i)) {
+                countWalls = 0;
                 currNum = sets.get(j).get(i);
                 int fin = currNum;
                 lengthNum = (int) sets.get(j).stream().filter((num) -> num == fin).count();
@@ -114,8 +115,10 @@ public class Maze {
                     else {
                         if (bottomWall.get(i - 1).get(j - 1))
                             str.append("__");
+                            //str.append(sets.get(i-1).get(j-1) + "_");
                         else
                             str.append("  ");
+                            //str.append(sets.get(i-1).get(j-1) + " ");
                         if (rightWall.get(i - 1).get(j - 1))
                             str.append("|");
                         else
